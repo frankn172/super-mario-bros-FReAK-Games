@@ -8,6 +8,10 @@ def check_keydown_events(event, mario):
         mario.moving_right = True
     elif event.key == pygame.K_LEFT:
         mario.moving_left = True
+    if event.key == pygame.K_SPACE:
+        if not mario.jumping and not mario.falling:
+            mario.jumping = True
+            mario.reset_jump_timer()
 
 
 def check_keyup_events(event, mario):
@@ -30,5 +34,5 @@ def check_events(mario):
 def draw_screen(screen, mario):
     screen.fill((255, 255, 255))
     mario.blitme()
-    sleep(0.005)
+    sleep(0.01)
     pygame.display.flip()
