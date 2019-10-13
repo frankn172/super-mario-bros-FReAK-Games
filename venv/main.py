@@ -1,7 +1,6 @@
-import sys
 import pygame
-from time import sleep
 from player import Mario
+import gamefunctions as gf
 
 
 def run_game():
@@ -11,25 +10,9 @@ def run_game():
     mario = Mario(screen)
 
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    mario.moving_right = True
-                elif event.key == pygame.K_LEFT:
-                    mario.moving_left = True
-            elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_RIGHT:
-                    mario.moving_right = False
-                elif event.key == pygame.K_LEFT:
-                    mario.moving_left = False
-
-        screen.fill((255, 255, 255))
+        gf.check_events(mario)
         mario.update()
-        mario.blitme()
-        sleep(0.001)
-        pygame.display.flip()
+        gf.draw_screen(screen, mario)
 
 
 run_game()

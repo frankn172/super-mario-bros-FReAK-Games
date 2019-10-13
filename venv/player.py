@@ -31,5 +31,6 @@ class Mario(Sprite):
             self.rect.centerx -= 1
 
     def blitme(self):
+        """Draw Mario to the screen"""
         self.screen.blit(self.image, self.rect)
         pass
