@@ -1,6 +1,7 @@
-import sys
-from time import sleep
 import pygame
+import sys
+import os
+from time import sleep
 
 
 def check_keydown_events(event, mario):
@@ -34,9 +35,35 @@ def check_events(mario, enemies):
             check_keyup_events(event, mario)
 
 
-def draw_screen(screen, mario, enemies):
-    screen.fill((255, 255, 255))
+def draw_screen(screen, mario, enemies, background):
+    screen.fill(background.color)
+    if mario.moving_right:
+        background.scroll(-20, 0)
+    screen.blit(background.surface, [0, 0])
     mario.blitme()
     enemies.draw(screen)
     sleep(0.01)
-    pygame.display.flip()
+    #pygame.display.flip()
+    pygame.display.update()
+
+
+def loadImage(fileName):
+    if os.path.isfile(fileName):
+        image = pygame.image.load(fileName)
+        image = image.convert_alpha()
+        # Return the image
+        return image
+    else:
+        raise Exception("Error loading image: " + fileName + " - Check filename and path?")
+
+
+def parseColor(color):
+    if type(color) == str:
+        # check to see if valid colour
+        return pygame.Color(color)
+    else:
+        colourRGB = pygame.Color("white")
+        colourRGB.r = color[0]
+        colourRGB.g = color[1]
+        colourRGB.b = color[2]
+        return colourRGB
