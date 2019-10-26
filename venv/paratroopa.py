@@ -2,9 +2,9 @@ import pygame
 from pygame.sprite import Sprite
 
 
-class Koopa(Sprite):
+class Paratroopa(Sprite):
     def __init__(self, screen):
-        super(Koopa, self).__init__()
+        super(Paratroopa, self).__init__()
         self.screen = screen
 
         # Load image
@@ -22,9 +22,12 @@ class Koopa(Sprite):
         # Set Type
         self.is_green = True
 
+        """Green paratroops move left to right or jump, Red Paratroops move up and down"""
         # Set Movement Flags
+        self.moving_up = True
+        self.moving_down = False
         self.moving_right = False
-        self.moving_left = True
+        self.moving_left = False
 
         # Set state
         self.in_shell = False
@@ -42,7 +45,7 @@ class Koopa(Sprite):
         if self.rect.left == 0:
             self.moving_right = True
             self.moving_left = False
-        # TODO Check if Koopa is Red, if so check if title is empty, if so fall down
+        # TODO implemtn jumping for green paratroopas
 
     def blitme(self):
         """Draw Koopaa to the screen"""

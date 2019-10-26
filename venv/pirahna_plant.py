@@ -2,9 +2,9 @@ import pygame
 from pygame.sprite import Sprite
 
 
-class Koopa(Sprite):
+class PirahnaPlant(Sprite):
     def __init__(self, screen):
-        super(Koopa, self).__init__()
+        super(PirahnaPlant, self).__init__()
         self.screen = screen
 
         # Load image
@@ -19,29 +19,21 @@ class Koopa(Sprite):
         # Store decimal value of Koopa's position
         self.center = float(self.rect.centerx)
 
-        # Set Type
-        self.is_green = True
-
         # Set Movement Flags
-        self.moving_right = False
-        self.moving_left = True
+        self.moving_up = False
+        self.moving_down = True
+        self.in_pipe = True
 
-        # Set state
-        self.in_shell = False
-        self.shell_timer = 25
+        # Timer, determines how long the plant is out of the pipe
+        # TODO set variables for pipe location
+        # TODO if mario is next to pipe, pirahna plant will not ascend
 
     def update(self):
         """Update Koopa position"""
-        if self.moving_right and self.rect.right < self.screen_rect.right:
+        if self.moving_up:
             self.rect.centerx += 1
-        if self.moving_left and self.rect.left > 0:
+        if self.moving_down:
             self.rect.centerx -= 1
-        if self.rect.right == self.screen_rect.right:
-            self.moving_right = False
-            self.moving_left = True
-        if self.rect.left == 0:
-            self.moving_right = True
-            self.moving_left = False
         # TODO Check if Koopa is Red, if so check if title is empty, if so fall down
 
     def blitme(self):
