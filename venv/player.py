@@ -37,7 +37,7 @@ class Mario(Sprite):
             self.rect.bottom += max(1.0, -0.05 * ((self.jump_timer/10) ** 2) + 5)
             self.jump_timer -= 1
             if self.rect.bottom >= self.screen_rect.bottom:
-                self.rect.bottom == self.screen_rect.bottom
+                self.rect.bottom = self.screen_rect.bottom
                 self.falling = False
         if self.jumping and self.rect.top > 0:
             self.falling = False

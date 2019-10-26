@@ -21,7 +21,10 @@ def check_keyup_events(event, mario):
         mario.moving_left = False
 
 
-def check_events(mario):
+def check_events(mario, enemies):
+    for enemy in enemies:
+        enemy.update()
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -31,8 +34,9 @@ def check_events(mario):
             check_keyup_events(event, mario)
 
 
-def draw_screen(screen, mario):
+def draw_screen(screen, mario, enemies):
     screen.fill((255, 255, 255))
     mario.blitme()
+    enemies.draw(screen)
     sleep(0.01)
     pygame.display.flip()
