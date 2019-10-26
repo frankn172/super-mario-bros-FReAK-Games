@@ -4,7 +4,7 @@ from gamefunctions import *
 
 class Background:
     def __init__(self, screen):
-        self.color = pygame.Color("black")
+        self.color = pygame.Color("white")
         self.tiles = None
         self.stagePosX = 0
         self.stagePosY = 0

@@ -1,6 +1,7 @@
 import pygame
 import sys
 import os
+import constants as c
 from time import sleep
 
 
@@ -22,10 +23,7 @@ def check_keyup_events(event, mario):
         mario.moving_left = False
 
 
-def check_events(mario, enemies):
-    for enemy in enemies:
-        enemy.update()
-
+def check_events(mario):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -33,6 +31,19 @@ def check_events(mario, enemies):
             check_keydown_events(event, mario)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, mario)
+
+
+def update_enemies(mario, enemies):
+    check_mario_enemy_collisions(mario, enemies)
+
+    for enemy in enemies:
+        enemy.update()
+
+
+def check_mario_enemy_collisions(mario, enemies):
+    for enemy in enemies:
+        if mario.rect.bottom == enemy.rect.top:
+            enemy.state = c.JUMPED_ON
 
 
 def draw_screen(screen, mario, enemies, background):

@@ -1,6 +1,7 @@
 import pygame
+import constants as c
 from player import Mario
-from goomba import Goomba
+from enemies import *
 from backgroud import Background
 import gamefunctions as gf
 from pygame.sprite import Group
@@ -12,7 +13,12 @@ def run_game():
     pygame.display.set_caption("Insert Title Here")
     mario = Mario(screen)
     enemies = Group()
-    enemies.add(Goomba(screen))
+    enemies.add(Goomba(y=c.GROUND_HEIGHT, x=150, direction=c.LEFT))
+    enemies.add(Koopa(y=c.GROUND_HEIGHT, x=170))
+    enemies.add(Goomba(y=c.GROUND_HEIGHT, x=190, direction=c.LEFT))
+    enemies.add(Goomba(y=c.GROUND_HEIGHT, x=210, direction=c.LEFT))
+    enemies.add(Goomba(y=c.GROUND_HEIGHT, x=240, direction=c.LEFT))
+
     background = Background(screen)
     background.setTiles([["images/1-1/tile000.png",
                           "images/1-1/tile001.png",
@@ -34,8 +40,9 @@ def run_game():
     background.scroll(0, 0)
 
     while True:
-        gf.check_events(mario, enemies)
+        gf.check_events(mario)
         mario.update()
+        gf.update_enemies(mario, enemies)
         gf.draw_screen(screen, mario, enemies, background)
 
 
