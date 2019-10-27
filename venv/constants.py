@@ -29,3 +29,6 @@ SHELL_SLIDE = 'shell slide'
 
 # Paratroopa States
 FLYING = 'flying'
+
+# Pirahna Plant States
+WAIT = 'wait'

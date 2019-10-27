@@ -77,6 +77,8 @@ class Enemy(pg.sprite.Sprite):
             self.death_jumping()
         elif self.state == c.FLYING:
             self.flying()
+        elif self.state == c.WAIT:
+            self.waiting()
 
     def walking(self):
         """Default state of moving from side to side"""
@@ -187,3 +189,35 @@ class Koopa(Enemy):
         if self.rect.y <= self.max_height or self.rect.y >= self.min_height:
             self.y_vel = self.y_vel * -1
         self.rect.y += self.y_vel
+
+
+class PirahnaPlant(Enemy):
+    def __init__(self, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name="plant"):
+        Enemy.__init__(self)
+        self.setup_enemy(x, y, direction, name, self.setup_frames)
+        self.y_vel = -1
+        self.max_height = y - 50
+        self.min_height = y
+        self.pipe_timer = 0
+
+    def setup_frames(self):
+        self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/123.png'))
+        self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/120.png'))
+
+    def jumped_on(self):
+        """When Mario jumps on the Pirahana Plant, Mario should get shrink or die"""
+        self.state = c.WALK
+
+    def walking(self):
+        self.rect.y += self.y_vel
+        if self.rect.y <= self.max_height or self.rect.y >= self.min_height:
+            self.y_vel = self.y_vel * -1
+            if self.rect.y >= self.min_height:
+                self.state = c.WAIT
+
+    def waiting(self):
+        if self.pipe_timer == 100:
+            self.pipe_timer = 0
+            self.state = c.WALK
+        else:
+            self.pipe_timer += 1
