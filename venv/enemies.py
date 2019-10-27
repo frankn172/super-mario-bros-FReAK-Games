@@ -6,6 +6,21 @@ class Enemy(pg.sprite.Sprite):
     """Superclass of all enemies"""
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
+        self.frames = None
+        self.frame_index = None
+        self.animate_timer = None
+        self.death_timer = None
+        self.gravity = None
+        self.state = None
+
+        self.name = None
+        self.direction = None
+
+        self.image = None
+        self.rect = None
+
+        self.x_vel = None
+        self.y_vel = None
 
     def setup_enemy(self, x, y, direction, name, setup_frames):
         """Set up enemies values"""
@@ -109,6 +124,7 @@ class Koopa(Enemy):
     def __init__(self, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name="koopa"):
         Enemy.__init__(self)
         self.setup_enemy(x, y, direction, name, self.setup_frames)
+        self.inShell = False
 
     def setup_frames(self):
         self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/87.png'))
@@ -117,7 +133,9 @@ class Koopa(Enemy):
 
     def jumped_on(self):
         """When Mario jumps on the Koopa, he should enter his shell"""
-        self.kill()
+        if self.inShell:
+            self.state = c.SHELL_SLIDE
+            return
         self.x_vel = 0
         self.frame_index = 2
         shell_y = self.rect.bottom
@@ -125,14 +143,16 @@ class Koopa(Enemy):
         self.rect = self.frames[self.frame_index].get_rect()
         self.rect.x = shell_x
         self.rect.bottom = shell_y
+        self.inShell = True
 
     def shell_sliding(self):
         """Define how the shell should move"""
+        self.rect.x += self.x_vel
         if self.direction == c.RIGHT:
             self.x_vel = 10
         elif self.direction == c.LEFT:
             self.x_vel = -10
-        if self.rect.left == 0:
+        if self.rect.left <= 0:
             self.direction = c.RIGHT
-        if self.rect.right == 300:
+        if self.rect.right >= 300:
             self.direction = c.LEFT

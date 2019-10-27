@@ -42,7 +42,7 @@ def update_enemies(mario, enemies):
 
 def check_mario_enemy_collisions(mario, enemies):
     for enemy in enemies:
-        if mario.rect.bottom == enemy.rect.top:
+        if enemy.rect.top - 1 <= mario.rect.bottom <= enemy.rect.top + 1 and enemy.rect.x < mario.rect.centerx < enemy.rect.x + enemy.rect.width:
             enemy.state = c.JUMPED_ON
 
 
