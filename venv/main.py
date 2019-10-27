@@ -20,6 +20,8 @@ def run_game():
     enemies.add(Goomba(y=c.GROUND_HEIGHT, x=240, direction=c.LEFT))
     enemies.add(Koopa(y=280, x=200, winged=True))
     enemies.add(PirahnaPlant(y=280, x=100))
+    enemies.add(CheepCheep(y=50, x=100))
+    enemies.add(Podaboo(x=200))
 
     background = Background(screen)
     background.setTiles([["images/1-1/tile000.png",

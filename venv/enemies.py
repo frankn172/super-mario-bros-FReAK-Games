@@ -221,3 +221,68 @@ class PirahnaPlant(Enemy):
             self.state = c.WALK
         else:
             self.pipe_timer += 1
+
+
+class CheepCheep(Enemy):
+    def __init__(self, y=c.GROUND_HEIGHT/2, x=0, direction=c.LEFT, name='cheepcheep'):
+        # TODO, makes two types of cheepcheeps, the gray variety moves faster than the green
+        Enemy.__init__(self)
+        self.setup_enemy(x, y, direction, name, self.setup_frames)
+
+    def setup_frames(self):
+        self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/23.png'))
+        self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/23.png'))
+        self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/73.png'))
+
+    def jumped_on(self):
+        self.frame_index = 2
+        self.kill()
+
+
+class FireBar(Enemy):
+    def __init__(self, y=c.GROUND_HEIGHT/2, x=0, direction=c.LEFT, name='cheepcheep'):
+        # TODO FIGURE OUT TO HOW TO DRAW SEVERAL SEGMENTS OF THE FIREBAR AND GET THEM TO ROTATE
+        Enemy.__init__(self)
+        self.setup_enemy(x, y, direction, name, self.setup_frames)
+
+    def setup_frames(self):
+        self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/60.png'))
+
+    def jumped_on(self):
+        self.state = c.WALK
+
+    def walking(self):
+        # TODO set up rotating fire bars
+        pass
+
+
+class Podaboo(Enemy):
+    def __init__(self, y=c.GROUND_HEIGHT - 10, x=0, direction=c.LEFT, name="plant"):
+        Enemy.__init__(self)
+        self.setup_enemy(x, y, direction, name, self.setup_frames)
+        self.y_vel = -1
+        self.max_height = y - 100
+        self.min_height = y
+        self.pipe_timer = 0
+
+    def setup_frames(self):
+        self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/56.png'))
+        self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/61.png'))
+
+    def jumped_on(self):
+        """When Mario jumps on the Pirahana Plant, Mario should get shrink or die"""
+        self.state = c.WALK
+
+    def walking(self):
+        self.rect.y += self.y_vel
+        if self.rect.y <= self.max_height or self.rect.y >= self.min_height:
+            self.y_vel = self.y_vel * -1
+            if self.rect.y >= self.min_height:
+                self.state = c.WAIT
+
+    def waiting(self):
+        if self.pipe_timer == 100:
+            self.pipe_timer = 0
+            self.state = c.WALK
+        else:
+            self.pipe_timer += 1
