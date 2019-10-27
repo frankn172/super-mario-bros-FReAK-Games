@@ -26,3 +26,6 @@ DEATH_JUMP = 'death jump'
 # Koopa States
 
 SHELL_SLIDE = 'shell slide'
+
+# Paratroopa States
+FLYING = 'flying'

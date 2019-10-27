@@ -18,6 +18,7 @@ def run_game():
     enemies.add(Goomba(y=c.GROUND_HEIGHT, x=190, direction=c.LEFT))
     enemies.add(Goomba(y=c.GROUND_HEIGHT, x=210, direction=c.LEFT))
     enemies.add(Goomba(y=c.GROUND_HEIGHT, x=240, direction=c.LEFT))
+    enemies.add(Koopa(y=280, x=200, winged=True))
 
     background = Background(screen)
     background.setTiles([["images/1-1/tile000.png",

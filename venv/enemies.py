@@ -11,6 +11,8 @@ class Enemy(pg.sprite.Sprite):
         self.animate_timer = None
         self.death_timer = None
         self.gravity = None
+        self.invulnerable_timer = None
+        self.is_invulnerable = None
         self.state = None
 
         self.name = None
@@ -29,6 +31,8 @@ class Enemy(pg.sprite.Sprite):
         self.animate_timer = 0
         self.death_timer = 0
         self.gravity = 1.5
+        self.invulnerable_timer = 0
+        self.is_invulnerable = False
         self.state = c.WALK
 
         self.name = name
@@ -56,6 +60,11 @@ class Enemy(pg.sprite.Sprite):
 
     def handle_state(self):
         """Enemy behavior is based on what state it is in"""
+        if self.is_invulnerable:
+            self.invulnerable_timer += 1
+            if self.invulnerable_timer == 100:
+                self.invulnerable_timer = 0
+                self.is_invulnerable = False
         if self.state == c.WALK:
             self.walking()
         elif self.state == c.FALL:
@@ -66,6 +75,8 @@ class Enemy(pg.sprite.Sprite):
             self.shell_sliding()
         elif self.state == c.DEATH_JUMP:
             self.death_jumping()
+        elif self.state == c.FLYING:
+            self.flying()
 
     def walking(self):
         """Default state of moving from side to side"""
@@ -85,6 +96,9 @@ class Enemy(pg.sprite.Sprite):
     def falling(self):
         if self.y_vel < 10:
             self.y_vel += self.gravity
+        if self.rect.bottom == c.GROUND_HEIGHT:
+            self.y_vel = 0
+            self.state = c.WALK
 
     def jumped_on(self):
         """Placeholder for when enemy is stomped on by Mario"""
@@ -121,9 +135,15 @@ class Goomba(Enemy):
 
 
 class Koopa(Enemy):
-    def __init__(self, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name="koopa"):
+    def __init__(self, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name="koopa", winged=False):
         Enemy.__init__(self)
         self.setup_enemy(x, y, direction, name, self.setup_frames)
+        self.winged = winged
+        self.max_height = y - 50
+        self.min_height = y + 50
+        if winged:
+            self.state = c.FLYING
+            self.y_vel = -1
         self.inShell = False
 
     def setup_frames(self):
@@ -133,7 +153,12 @@ class Koopa(Enemy):
 
     def jumped_on(self):
         """When Mario jumps on the Koopa, he should enter his shell"""
-        if self.inShell:
+        if self.state == c.FLYING:
+            self.state = c.FALL
+            self.y_vel = 0
+            self.is_invulnerable = True
+            return
+        if self.inShell and not self.is_invulnerable:
             self.state = c.SHELL_SLIDE
             return
         self.x_vel = 0
@@ -144,6 +169,7 @@ class Koopa(Enemy):
         self.rect.x = shell_x
         self.rect.bottom = shell_y
         self.inShell = True
+        self.is_invulnerable = True
 
     def shell_sliding(self):
         """Define how the shell should move"""
@@ -156,3 +182,8 @@ class Koopa(Enemy):
             self.direction = c.RIGHT
         if self.rect.right >= 300:
             self.direction = c.LEFT
+
+    def flying(self):
+        if self.rect.y <= self.max_height or self.rect.y >= self.min_height:
+            self.y_vel = self.y_vel * -1
+        self.rect.y += self.y_vel
