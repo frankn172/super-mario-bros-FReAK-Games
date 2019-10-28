@@ -22,6 +22,8 @@ def run_game():
     enemies.add(PirahnaPlant(y=280, x=100))
     enemies.add(CheepCheep(y=50, x=100))
     enemies.add(Podaboo(x=200))
+    enemies.add(FireBar(x=150,y=150))
+    enemies.add(Blooper(x=200, y=100, mario=mario))
 
     background = Background(screen)
     background.setTiles([["images/1-1/tile000.png",

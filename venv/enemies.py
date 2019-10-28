@@ -1,4 +1,7 @@
 import pygame as pg
+from math import sin
+from math import cos
+from math import pi
 import constants as c
 
 
@@ -240,10 +243,13 @@ class CheepCheep(Enemy):
 
 
 class FireBar(Enemy):
-    def __init__(self, y=c.GROUND_HEIGHT/2, x=0, direction=c.LEFT, name='cheepcheep'):
-        # TODO FIGURE OUT TO HOW TO DRAW SEVERAL SEGMENTS OF THE FIREBAR AND GET THEM TO ROTATE
+    def __init__(self, y=c.GROUND_HEIGHT/2, x=0, direction=c.LEFT, name='firebar', radius=10):
         Enemy.__init__(self)
         self.setup_enemy(x, y, direction, name, self.setup_frames)
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self.angle = 0
 
     def setup_frames(self):
         self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/60.png'))
@@ -252,12 +258,13 @@ class FireBar(Enemy):
         self.state = c.WALK
 
     def walking(self):
-        # TODO set up rotating fire bars
-        pass
+        self.angle += pi/32
+        self.rect.x = cos(self.angle) * self.radius + self.x
+        self.rect.y = sin(self.angle) * self.radius + self.y
 
 
 class Podaboo(Enemy):
-    def __init__(self, y=c.GROUND_HEIGHT - 10, x=0, direction=c.LEFT, name="plant"):
+    def __init__(self, y=c.GROUND_HEIGHT - 10, x=0, direction=c.LEFT, name="podaboo"):
         Enemy.__init__(self)
         self.setup_enemy(x, y, direction, name, self.setup_frames)
         self.y_vel = -1
@@ -286,3 +293,42 @@ class Podaboo(Enemy):
             self.state = c.WALK
         else:
             self.pipe_timer += 1
+
+
+class Blooper(Enemy):
+    def __init__(self,  mario, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name="blooper"):
+        Enemy.__init__(self)
+        self.mario = mario
+        self.setup_enemy(x, y, direction, name, self.setup_frames)
+        self.y_vel = -1
+        self.x_vel = 0
+        self.max_height = y - 50
+        self.min_height = y
+        self.pipe_timer = 0
+
+    def setup_frames(self):
+        self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/124.png'))
+        self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/119.png'))
+
+    def jumped_on(self):
+        """When Mario jumps on the Pirahana Plant, Mario should get shrink or die"""
+        self.state = c.WALK
+
+    def walking(self):
+        self.rect.y += self.y_vel
+        self.rect.x += self.x_vel
+
+        if self.mario.rect.centerx == self.rect.centerx:
+            self.x_vel = 0
+
+        if self.rect.y <= self.max_height:
+            self.y_vel = self.y_vel * -1
+            if self.mario.rect.centerx < self.rect.centerx:
+                self.x_vel = -1
+            elif self.mario.rect.centerx > self.rect.centerx:
+                self.x_vel = 1
+            else:
+                self.x_vel = 0
+        elif self.rect.y >= self.min_height:
+            self.y_vel = self.y_vel * -1
+            self.x_vel = 0

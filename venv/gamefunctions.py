@@ -49,6 +49,7 @@ def check_mario_enemy_collisions(mario, enemies):
             # TODO implement Mario death sequence
             print('HI')
 
+
 def draw_screen(screen, mario, enemies, background):
     screen.fill(background.color)
     if mario.moving_right:
