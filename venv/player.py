@@ -8,7 +8,15 @@ class Mario(Sprite):
         self.screen = screen
 
         # Load Mario standing image
-        self.image = pygame.image.load('images/standing/mario_stand0.png')
+        self.image = pygame.image.load('images/mario/stand_right.png')
+        self.walk_left = [pygame.image.load('images/mario/walk_left_1.png'),
+                          pygame.image.load('images/mario/walk_left_2.png'),
+                          pygame.image.load('images/mario/walk_left_3.png')]
+        self.walk_right = [pygame.image.load('images/mario/walk_right_1.png'),
+                          pygame.image.load('images/mario/walk_right_2.png'),
+                          pygame.image.load('images/mario/walk_right_3.png')]
+        self.jump_left = pygame.image.load('images/mario/jump_left.png')
+        self.jump_right = pygame.image.load('images/mario/jump_right.png')
         self.rect = self.image.get_rect()
         self.screen_rect = self.screen.get_rect()
 
@@ -25,6 +33,9 @@ class Mario(Sprite):
         self.jumping = False
         self.jump_timer = 0
         self.falling = False
+
+        # Animation Tracker
+        self.walk_count = 0
 
     def update(self):
         """Update Mario's position"""
@@ -51,7 +62,23 @@ class Mario(Sprite):
     def reset_jump_timer(self):
         self.jump_timer = 25
 
-    def blitme(self):
+    def blitme(self, screen):
         """Draw Mario to the screen"""
-        self.screen.blit(self.image, self.rect)
+        if self.walk_count + 1 >= 45:
+            self.walk_count = 0
+
+        if self.moving_left:
+            if self.jumping:
+                screen.blit(self.jump_left, self.rect)
+            else:
+                screen.blit(self.walk_left[self.walk_count // 15], self.rect)
+            self.walk_count += 1
+        elif self.moving_right:
+            if self.jumping:
+                screen.blit(self.jump_right, self.rect)
+            else:
+                screen.blit(self.walk_right[self.walk_count // 15], self.rect)
+            self.walk_count += 1
+        else:
+            self.screen.blit(self.image, self.rect)
         pass

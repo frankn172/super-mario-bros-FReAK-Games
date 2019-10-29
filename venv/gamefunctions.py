@@ -56,8 +56,9 @@ def draw_screen(screen, mario, enemies, background):
     if mario.moving_right:
         background.scroll(-20, 0)
     screen.blit(background.surface, [0, 0])
-    mario.blitme()
-    enemies.draw(screen)
+    mario.blitme(screen)
+    for enemy in enemies:
+            enemy.draw(screen)
     sleep(0.01)
     #pygame.display.flip()
     pygame.display.update()

@@ -24,6 +24,9 @@ class Enemy(pg.sprite.Sprite):
         self.image = None
         self.rect = None
 
+        # Walking Counter
+        self.walk_count = 0
+
         self.x_vel = None
         self.y_vel = None
 
@@ -122,12 +125,17 @@ class Enemy(pg.sprite.Sprite):
     def update(self, *args):
         self.handle_state()
         self.animation()
-
+        
+    def draw(self, screen):
+        pass
 
 class Goomba(Enemy):
     def __init__(self, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name='goomba'):
         Enemy.__init__(self)
         self.setup_enemy(x, y, direction, name, self.setup_frames)
+        self.walk = [pg.image.load('images/Cut-Sprites-For-Mario/Enemies/76.png'),
+                     pg.image.load('images/Cut-Sprites-For-Mario/Enemies/72.png')]
+
 
     def setup_frames(self):
         self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/76.png'))
@@ -138,6 +146,12 @@ class Goomba(Enemy):
         self.frame_index = 2
         self.kill()
 
+    def draw(self, screen):
+        if self.walk_count + 1 >= 40:
+            self.walk_count = 0
+
+        screen.blit(self.walk[self.walk_count // 20], self.rect)
+        self.walk_count += 1
 
 class Koopa(Enemy):
     def __init__(self, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name="koopa", winged=False):
@@ -150,6 +164,13 @@ class Koopa(Enemy):
             self.state = c.FLYING
             self.y_vel = -1
         self.inShell = False
+
+        # Animation
+        self.walk_left = [pg.image.load('images/Cut-Sprites-For-Mario/Enemies/87.png'),
+                            pg.image.load('images/Cut-Sprites-For-Mario/Enemies/96.png')]
+        self.walk_right = [pg.image.load('images/Cut-Sprites-For-Mario/Enemies/106.png'),
+                           pg.image.load('images/Cut-Sprites-For-Mario/Enemies/97.png')]
+
 
     def setup_frames(self):
         self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/87.png'))
@@ -193,6 +214,16 @@ class Koopa(Enemy):
             self.y_vel = self.y_vel * -1
         self.rect.y += self.y_vel
 
+    def draw(self, screen):
+        if self.walk_count + 1 >= 40:
+            self.walk_count = 0
+
+        if self.direction == c.LEFT:
+            screen.blit(self.walk_left[self.walk_count // 20], self.rect)
+            self.walk_count += 1
+        else:
+            screen.blit(self.walk_right[self.walk_count // 20], self.rect)
+            self.walk_count += 1
 
 class PirahnaPlant(Enemy):
     def __init__(self, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name="plant"):
@@ -202,6 +233,8 @@ class PirahnaPlant(Enemy):
         self.max_height = y - 50
         self.min_height = y
         self.pipe_timer = 0
+        self.animate = [pg.image.load('images/Cut-Sprites-For-Mario/Enemies/123.png'),
+                        pg.image.load('images/Cut-Sprites-For-Mario/Enemies/120.png')]
 
     def setup_frames(self):
         self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/123.png'))
@@ -225,12 +258,22 @@ class PirahnaPlant(Enemy):
         else:
             self.pipe_timer += 1
 
+    def draw(self, screen):
+        if self.walk_count + 1 >= 40:
+            self.walk_count = 0
+
+        screen.blit(self.animate[self.walk_count // 20], self.rect)
+        self.walk_count += 1
 
 class CheepCheep(Enemy):
     def __init__(self, y=c.GROUND_HEIGHT/2, x=0, direction=c.LEFT, name='cheepcheep'):
         # TODO, makes two types of cheepcheeps, the gray variety moves faster than the green
         Enemy.__init__(self)
         self.setup_enemy(x, y, direction, name, self.setup_frames)
+        self.swim_left = [pg.image.load('images/Cut-Sprites-For-Mario/Enemies/23.png'),
+                           pg.image.load('images/Cut-Sprites-For-Mario/Enemies/22.png')]
+        self.swim_right = [pg.image.load('images/Cut-Sprites-For-Mario/Enemies/24.png'),
+                           pg.image.load('images/Cut-Sprites-For-Mario/Enemies/25.png')]
 
     def setup_frames(self):
         self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/23.png'))
@@ -241,6 +284,16 @@ class CheepCheep(Enemy):
         self.frame_index = 2
         self.kill()
 
+    def draw(self, screen):
+        if self.walk_count + 1 >= 40:
+            self.walk_count = 0
+
+        if self.direction == c.LEFT:
+            screen.blit(self.swim_left[self.walk_count // 20], self.rect)
+            self.walk_count += 1
+        elif self.direction == c.RIGHT:
+            screen.blit(self.swim_right[self.walk_count // 20], self.rect)
+            self.walk_count += 1
 
 class FireBar(Enemy):
     def __init__(self, y=c.GROUND_HEIGHT/2, x=0, direction=c.LEFT, name='firebar', radius=10):
@@ -250,6 +303,7 @@ class FireBar(Enemy):
         self.y = y
         self.radius = radius
         self.angle = 0
+
 
     def setup_frames(self):
         self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/60.png'))
@@ -262,6 +316,8 @@ class FireBar(Enemy):
         self.rect.x = cos(self.angle) * self.radius + self.x
         self.rect.y = sin(self.angle) * self.radius + self.y
 
+    def draw(self, screen):
+        screen.blit(self.frames[0], self.rect)
 
 class Podaboo(Enemy):
     def __init__(self, y=c.GROUND_HEIGHT - 10, x=0, direction=c.LEFT, name="podaboo"):
@@ -271,6 +327,9 @@ class Podaboo(Enemy):
         self.max_height = y - 100
         self.min_height = y
         self.pipe_timer = 0
+
+        self.move_up = pg.image.load('images/Cut-Sprites-For-Mario/Enemies/61.png')
+        self.move_down = pg.image.load('images/Cut-Sprites-For-Mario/Enemies/56.png')
 
     def setup_frames(self):
         self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/56.png'))
@@ -294,6 +353,11 @@ class Podaboo(Enemy):
         else:
             self.pipe_timer += 1
 
+    def draw(self, screen):
+        if self.y_vel > 0:
+            screen.blit(self.move_up, self.rect)
+        else:
+            screen.blit(self.move_down, self.rect)
 
 class Blooper(Enemy):
     def __init__(self,  mario, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name="blooper"):
@@ -305,6 +369,10 @@ class Blooper(Enemy):
         self.max_height = y - 50
         self.min_height = y
         self.pipe_timer = 0
+
+        # Animation List
+        self.animate = [pg.image.load('images/Cut-Sprites-For-Mario/Enemies/119.png'),
+                        pg.image.load('images/Cut-Sprites-For-Mario/Enemies/124.png')]
 
     def setup_frames(self):
         self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/124.png'))
@@ -332,3 +400,10 @@ class Blooper(Enemy):
         elif self.rect.y >= self.min_height:
             self.y_vel = self.y_vel * -1
             self.x_vel = 0
+
+    def draw(self, screen):
+        if self.walk_count + 1 >= 40:
+            self.walk_count = 0
+
+        screen.blit(self.animate[self.walk_count // 20], self.rect)
+        self.walk_count += 1
