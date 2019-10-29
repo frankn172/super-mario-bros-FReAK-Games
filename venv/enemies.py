@@ -369,6 +369,8 @@ class Blooper(Enemy):
         self.max_height = y - 50
         self.min_height = y
         self.pipe_timer = 0
+        self.move_down = False
+        self.move_up = False
 
         # Animation List
         self.animate = [pg.image.load('images/Cut-Sprites-For-Mario/Enemies/119.png'),
@@ -391,6 +393,8 @@ class Blooper(Enemy):
 
         if self.rect.y <= self.max_height:
             self.y_vel = self.y_vel * -1
+            self.move_down = True
+            self.move_up = False
             if self.mario.rect.centerx < self.rect.centerx:
                 self.x_vel = -1
             elif self.mario.rect.centerx > self.rect.centerx:
@@ -398,12 +402,13 @@ class Blooper(Enemy):
             else:
                 self.x_vel = 0
         elif self.rect.y >= self.min_height:
+            self.move_down = False
+            self.move_up = True
             self.y_vel = self.y_vel * -1
             self.x_vel = 0
 
     def draw(self, screen):
-        if self.walk_count + 1 >= 40:
-            self.walk_count = 0
-
-        screen.blit(self.animate[self.walk_count // 20], self.rect)
-        self.walk_count += 1
+        if self.move_down:
+            screen.blit(self.animate[0], self.rect)
+        else:
+            screen.blit(self.animate[1], self.rect)
