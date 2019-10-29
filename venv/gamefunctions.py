@@ -33,11 +33,14 @@ def check_events(mario):
             check_keyup_events(event, mario)
 
 
-def update_enemies(mario, enemies):
+def update_enemies(mario, enemies, powerups):
     check_mario_enemy_collisions(mario, enemies)
 
     for enemy in enemies:
         enemy.update()
+
+    for powerup in powerups:
+        powerup.update()
 
 
 def check_mario_enemy_collisions(mario, enemies):
@@ -51,7 +54,7 @@ def check_mario_enemy_collisions(mario, enemies):
             print('HI')
 
 
-def draw_screen(screen, mario, enemies, background):
+def draw_screen(screen, mario, enemies, powerups, background):
     screen.fill(background.color)
     if mario.moving_right:
         background.scroll(-20, 0)
@@ -59,6 +62,9 @@ def draw_screen(screen, mario, enemies, background):
     mario.blitme(screen)
     for enemy in enemies:
             enemy.draw(screen)
+    mario.blitme(screen)
+    enemies.draw(screen)
+    powerups.draw(screen)
     sleep(0.01)
     #pygame.display.flip()
     pygame.display.update()

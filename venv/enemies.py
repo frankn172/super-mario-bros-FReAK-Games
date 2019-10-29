@@ -4,7 +4,6 @@ from math import cos
 from math import pi
 import constants as c
 
-
 class Enemy(pg.sprite.Sprite):
     """Superclass of all enemies"""
     def __init__(self):
@@ -104,9 +103,12 @@ class Enemy(pg.sprite.Sprite):
     def falling(self):
         if self.y_vel < 10:
             self.y_vel += self.gravity
-        if self.rect.bottom == c.GROUND_HEIGHT:
+        if self.rect.bottom >= c.GROUND_HEIGHT:
+            self.rect.y == c.GROUND_HEIGHT
             self.y_vel = 0
             self.state = c.WALK
+            return
+        self.rect.y += self.y_vel
 
     def jumped_on(self):
         """Placeholder for when enemy is stomped on by Mario"""
@@ -179,7 +181,8 @@ class Koopa(Enemy):
 
     def jumped_on(self):
         """When Mario jumps on the Koopa, he should enter his shell"""
-        if self.state == c.FLYING:
+        if self.winged:
+            self.winged = False
             self.state = c.FALL
             self.y_vel = 0
             self.is_invulnerable = True
@@ -312,7 +315,7 @@ class FireBar(Enemy):
         self.state = c.WALK
 
     def walking(self):
-        self.angle += pi/32
+        self.angle += pi/64
         self.rect.x = cos(self.angle) * self.radius + self.x
         self.rect.y = sin(self.angle) * self.radius + self.y
 

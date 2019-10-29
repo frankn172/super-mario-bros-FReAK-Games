@@ -2,6 +2,7 @@ import pygame
 import constants as c
 from player import Mario
 from enemies import *
+from powerup import *
 from backgroud import Background
 import gamefunctions as gf
 from pygame.sprite import Group
@@ -14,6 +15,9 @@ def run_game():
     mario = Mario(screen)
     enemies = Group()
     enemies.add(Goomba(y=c.GROUND_HEIGHT, x=150, direction=c.LEFT))
+    powerups = Group()
+
+    enemies.add(Goomba(y=c.GROUND_HEIGHT, x=150, direction=c.LEFT))
     enemies.add(Koopa(y=c.GROUND_HEIGHT, x=170))
     enemies.add(Goomba(y=c.GROUND_HEIGHT, x=190, direction=c.LEFT))
     enemies.add(Goomba(y=c.GROUND_HEIGHT, x=210, direction=c.LEFT))
@@ -24,6 +28,19 @@ def run_game():
     enemies.add(Podaboo(x=200))
     enemies.add(FireBar(x=150,y=150))
     enemies.add(Blooper(x=200, y=100, mario=mario))
+    enemies.add(FireBar(x=150, y=150))
+    enemies.add(FireBar(x=150, y=150, radius=20))
+    enemies.add(FireBar(x=150, y=150, radius=30))
+    enemies.add(FireBar(x=150, y=150, radius=40))
+    enemies.add(FireBar(x=150, y=150, radius=50))
+    enemies.add(FireBar(x=150, y=150, radius=60))
+    enemies.add(FireBar(x=150, y=150, radius=70))
+    enemies.add(Blooper(x=200, y=100, mario=mario))
+
+    powerups.add(Mushroom(x=20))
+    powerups.add(Flower(x=250))
+    powerups.add(Life(x=50))
+    powerups.add(Star(x=10))
 
     background = Background(screen)
     background.setTiles([["images/1-1/tile000.png",
@@ -48,8 +65,9 @@ def run_game():
     while True:
         gf.check_events(mario)
         mario.update()
-        gf.update_enemies(mario, enemies)
-        gf.draw_screen(screen, mario, enemies, background)
+        gf.update_enemies(mario, enemies, powerups)
+        gf.draw_screen(screen, mario, enemies, powerups, background)
+
 
 
 run_game()
