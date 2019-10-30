@@ -22,7 +22,7 @@ class Mario(Sprite):
 
         # Position Mario
         self.rect.centerx = self.screen_rect.centerx
-        self.rect.bottom = self.screen_rect.bottom
+        self.rect.bottom = self.screen_rect.bottom - 25
 
         # Store decimal value of Mario's position
         self.center = float(self.rect.centerx)

@@ -10,8 +10,8 @@ from pygame.sprite import Group
 
 def run_game():
     pygame.init()
-    screen = pygame.display.set_mode((300, 300))
-    pygame.display.set_caption("Insert Title Here")
+    screen = pygame.display.set_mode((448, 224))
+    pygame.display.set_caption("Super Mario Bros")
     mario = Mario(screen)
     enemies = Group()
     enemies.add(Goomba(y=c.GROUND_HEIGHT, x=150, direction=c.LEFT))
