@@ -13,8 +13,8 @@ class Mario(Sprite):
                           pygame.image.load('images/mario/walk_left_2.png'),
                           pygame.image.load('images/mario/walk_left_3.png')]
         self.walk_right = [pygame.image.load('images/mario/walk_right_1.png'),
-                          pygame.image.load('images/mario/walk_right_2.png'),
-                          pygame.image.load('images/mario/walk_right_3.png')]
+                           pygame.image.load('images/mario/walk_right_2.png'),
+                           pygame.image.load('images/mario/walk_right_3.png')]
         self.jump_left = pygame.image.load('images/mario/jump_left.png')
         self.jump_right = pygame.image.load('images/mario/jump_right.png')
         self.rect = self.image.get_rect()
@@ -45,14 +45,14 @@ class Mario(Sprite):
             self.rect.centerx -= 3
         if self.falling and self.rect.bottom < self.screen_rect.bottom:
             self.jumping = False
-            self.rect.bottom += max(1.0, -0.05 * ((self.jump_timer/10) ** 2) + 5)
+            self.rect.bottom += max(1.0, -0.05 * ((self.jump_timer / 10) ** 2) + 5)
             self.jump_timer -= 1
             if self.rect.bottom >= self.screen_rect.bottom:
                 self.rect.bottom = self.screen_rect.bottom
                 self.falling = False
         if self.jumping and self.rect.top > 0:
             self.falling = False
-            self.rect.bottom -= -0.05 * ((self.jump_timer/20) ** 2) + 5
+            self.rect.bottom -= -0.05 * ((self.jump_timer / 20) ** 2) + 5
             self.jump_timer -= 1
             if self.jump_timer == 0:
                 self.jumping = False

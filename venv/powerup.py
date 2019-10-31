@@ -1,9 +1,11 @@
 import pygame as pg
+
 import constants as c
 
 
 class Powerup(pg.sprite.Sprite):
     """Superclass of all powerups"""
+
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
         self.direction = None

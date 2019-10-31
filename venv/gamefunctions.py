@@ -1,8 +1,10 @@
-import pygame
-import sys
 import os
-import constants as c
+import sys
 from time import sleep
+
+import pygame
+
+import constants as c
 
 
 def check_keydown_events(event, mario):
@@ -61,12 +63,12 @@ def draw_screen(screen, mario, enemies, powerups, background):
     screen.blit(background.surface, [0, 0])
     mario.blitme(screen)
     for enemy in enemies:
-            enemy.draw(screen)
+        enemy.draw(screen)
     mario.blitme(screen)
     enemies.draw(screen)
     powerups.draw(screen)
     sleep(0.01)
-    #pygame.display.flip()
+    # pygame.display.flip()
     pygame.display.update()
 
 

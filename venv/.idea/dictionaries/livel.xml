@@ -2,9 +2,17 @@
   <dictionary name="livel">
     <words>
       <w>abcdefghijklmnopqrstuvwxyz</w>
+      <w>blitme</w>
+      <w>centerx</w>
       <w>colorkey</w>
+      <w>goomba</w>
+      <w>kernelsize</w>
+      <w>powerups</w>
       <w>scalingfactor</w>
       <w>spritesheet</w>
+      <w>srfc</w>
+      <w>xpos</w>
+      <w>ypos</w>
     </words>
   </dictionary>
 </component>

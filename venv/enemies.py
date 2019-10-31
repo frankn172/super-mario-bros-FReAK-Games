@@ -1,11 +1,15 @@
-import pygame as pg
-from math import sin
 from math import cos
 from math import pi
+from math import sin
+
+import pygame as pg
+
 import constants as c
+
 
 class Enemy(pg.sprite.Sprite):
     """Superclass of all enemies"""
+
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
         self.frames = None
@@ -127,9 +131,10 @@ class Enemy(pg.sprite.Sprite):
     def update(self, *args):
         self.handle_state()
         self.animation()
-        
+
     def draw(self, screen):
         pass
+
 
 class Goomba(Enemy):
     def __init__(self, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name='goomba'):
@@ -137,7 +142,6 @@ class Goomba(Enemy):
         self.setup_enemy(x, y, direction, name, self.setup_frames)
         self.walk = [pg.image.load('images/Cut-Sprites-For-Mario/Enemies/76.png'),
                      pg.image.load('images/Cut-Sprites-For-Mario/Enemies/72.png')]
-
 
     def setup_frames(self):
         self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/76.png'))
@@ -155,6 +159,7 @@ class Goomba(Enemy):
         screen.blit(self.walk[self.walk_count // 20], self.rect)
         self.walk_count += 1
 
+
 class Koopa(Enemy):
     def __init__(self, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name="koopa", winged=False):
         Enemy.__init__(self)
@@ -169,10 +174,9 @@ class Koopa(Enemy):
 
         # Animation
         self.walk_left = [pg.image.load('images/Cut-Sprites-For-Mario/Enemies/87.png'),
-                            pg.image.load('images/Cut-Sprites-For-Mario/Enemies/96.png')]
+                          pg.image.load('images/Cut-Sprites-For-Mario/Enemies/96.png')]
         self.walk_right = [pg.image.load('images/Cut-Sprites-For-Mario/Enemies/106.png'),
                            pg.image.load('images/Cut-Sprites-For-Mario/Enemies/97.png')]
-
 
     def setup_frames(self):
         self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/87.png'))
@@ -228,6 +232,7 @@ class Koopa(Enemy):
             screen.blit(self.walk_right[self.walk_count // 20], self.rect)
             self.walk_count += 1
 
+
 class PirahnaPlant(Enemy):
     def __init__(self, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name="plant"):
         Enemy.__init__(self)
@@ -268,13 +273,14 @@ class PirahnaPlant(Enemy):
         screen.blit(self.animate[self.walk_count // 20], self.rect)
         self.walk_count += 1
 
+
 class CheepCheep(Enemy):
-    def __init__(self, y=c.GROUND_HEIGHT/2, x=0, direction=c.LEFT, name='cheepcheep'):
+    def __init__(self, y=c.GROUND_HEIGHT / 2, x=0, direction=c.LEFT, name='cheepcheep'):
         # TODO, makes two types of cheepcheeps, the gray variety moves faster than the green
         Enemy.__init__(self)
         self.setup_enemy(x, y, direction, name, self.setup_frames)
         self.swim_left = [pg.image.load('images/Cut-Sprites-For-Mario/Enemies/23.png'),
-                           pg.image.load('images/Cut-Sprites-For-Mario/Enemies/22.png')]
+                          pg.image.load('images/Cut-Sprites-For-Mario/Enemies/22.png')]
         self.swim_right = [pg.image.load('images/Cut-Sprites-For-Mario/Enemies/24.png'),
                            pg.image.load('images/Cut-Sprites-For-Mario/Enemies/25.png')]
 
@@ -298,15 +304,15 @@ class CheepCheep(Enemy):
             screen.blit(self.swim_right[self.walk_count // 20], self.rect)
             self.walk_count += 1
 
+
 class FireBar(Enemy):
-    def __init__(self, y=c.GROUND_HEIGHT/2, x=0, direction=c.LEFT, name='firebar', radius=10):
+    def __init__(self, y=c.GROUND_HEIGHT / 2, x=0, direction=c.LEFT, name='firebar', radius=10):
         Enemy.__init__(self)
         self.setup_enemy(x, y, direction, name, self.setup_frames)
         self.x = x
         self.y = y
         self.radius = radius
         self.angle = 0
-
 
     def setup_frames(self):
         self.frames.append(pg.image.load('images/Cut-Sprites-For-Mario/Enemies/60.png'))
@@ -315,12 +321,13 @@ class FireBar(Enemy):
         self.state = c.WALK
 
     def walking(self):
-        self.angle += pi/64
+        self.angle += pi / 64
         self.rect.x = cos(self.angle) * self.radius + self.x
         self.rect.y = sin(self.angle) * self.radius + self.y
 
     def draw(self, screen):
         screen.blit(self.frames[0], self.rect)
+
 
 class Podaboo(Enemy):
     def __init__(self, y=c.GROUND_HEIGHT - 10, x=0, direction=c.LEFT, name="podaboo"):
@@ -362,8 +369,9 @@ class Podaboo(Enemy):
         else:
             screen.blit(self.move_down, self.rect)
 
+
 class Blooper(Enemy):
-    def __init__(self,  mario, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name="blooper"):
+    def __init__(self, mario, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name="blooper"):
         Enemy.__init__(self)
         self.mario = mario
         self.setup_enemy(x, y, direction, name, self.setup_frames)

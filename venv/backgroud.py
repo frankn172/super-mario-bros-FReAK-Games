@@ -1,4 +1,3 @@
-import pygame
 from gamefunctions import *
 
 
@@ -38,7 +37,7 @@ class Background:
         row2 = ((self.stagePosY + self.tileHeight) % (self.tileHeight * len(self.tiles))) // self.tileHeight
         self.screen.blit(self.tiles[row][col], [xOff, yOff])
         self.screen.blit(self.tiles[row][col2], [xOff + self.tileWidth, yOff])
-        self.screen.blit(self.tiles[row2][col], [xOff, yOff+self.tileHeight])
+        self.screen.blit(self.tiles[row2][col], [xOff, yOff + self.tileHeight])
         self.screen.blit(self.tiles[row2][col2], [xOff + self.tileWidth, yOff + self.tileHeight])
 
         self.surface = self.screen.copy()

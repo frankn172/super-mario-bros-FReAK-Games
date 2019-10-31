@@ -22,8 +22,7 @@ class Menu:
         self.inChoosingLevel = False
         self.dashboard = dashboard
         self.levelCount = 0
-        # need a title screen spritesheet
-        self.spritesheet = Spritesheet("images/title_screen.png")
+        self.spritesheet = Spritesheet("images/sprite_sheets_super_mario/title.png")
         self.menu_banner = self.spritesheet.image_at(
             0,
             60,

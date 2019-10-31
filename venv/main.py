@@ -1,11 +1,11 @@
 import pygame
-import constants as c
-from player import Mario
-from enemies import *
-from powerup import *
-from backgroud import Background
-import gamefunctions as gf
 from pygame.sprite import Group
+
+import gamefunctions as gf
+from backgroud import Background
+from enemies import *
+from player import Mario
+from powerup import *
 
 
 def run_game():
@@ -26,7 +26,7 @@ def run_game():
     enemies.add(PirahnaPlant(y=280, x=100))
     enemies.add(CheepCheep(y=50, x=100))
     enemies.add(Podaboo(x=200))
-    enemies.add(FireBar(x=150,y=150))
+    enemies.add(FireBar(x=150, y=150))
     enemies.add(Blooper(x=200, y=100, mario=mario))
     enemies.add(FireBar(x=150, y=150))
     enemies.add(FireBar(x=150, y=150, radius=20))
@@ -67,7 +67,6 @@ def run_game():
         mario.update()
         gf.update_enemies(mario, enemies, powerups)
         gf.draw_screen(screen, mario, enemies, powerups, background)
-
 
 
 run_game()
