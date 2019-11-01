@@ -100,7 +100,7 @@ class Enemy(pg.sprite.Sprite):
         if self.rect.left == 0:
             self.direction = c.RIGHT
             self.set_velocity()
-        if self.rect.right == 300:
+        if self.rect.right == c.SCREEN_WIDTH:
             self.direction = c.LEFT
             self.set_velocity()
 

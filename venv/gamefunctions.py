@@ -59,7 +59,7 @@ def check_mario_enemy_collisions(mario, enemies):
 def draw_screen(screen, mario, enemies, powerups, background):
     screen.fill(background.color)
     if mario.moving_right:
-        background.scroll(-20, 0)
+        background.scroll(-1, 0)
     screen.blit(background.surface, [0, 0])
     mario.blitme(screen)
     for enemy in enemies:

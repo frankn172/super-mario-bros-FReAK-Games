@@ -1,5 +1,6 @@
 import pygame
 from pygame.sprite import Sprite
+import constants as c
 
 
 class Mario(Sprite):
@@ -39,16 +40,16 @@ class Mario(Sprite):
 
     def update(self):
         """Update Mario's position"""
-        if self.moving_right and self.rect.right < self.screen_rect.right:
+        if self.moving_right and self.rect.right < self.screen_rect.right and self.rect.centerx <= c.SCREEN_WIDTH/2:
             self.rect.centerx += 3
         if self.moving_left and self.rect.left > 0:
             self.rect.centerx -= 3
-        if self.falling and self.rect.bottom < self.screen_rect.bottom:
+        if self.falling and self.rect.bottom < self.screen_rect.bottom - 25:
             self.jumping = False
             self.rect.bottom += max(1.0, -0.05 * ((self.jump_timer / 10) ** 2) + 5)
             self.jump_timer -= 1
-            if self.rect.bottom >= self.screen_rect.bottom:
-                self.rect.bottom = self.screen_rect.bottom
+            if self.rect.bottom >= self.screen_rect.bottom - 25:
+                self.rect.bottom = self.screen_rect.bottom - 25
                 self.falling = False
         if self.jumping and self.rect.top > 0:
             self.falling = False
