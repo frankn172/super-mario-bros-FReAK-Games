@@ -1,6 +1,6 @@
 import pygame
 
-from spritesheet import Spritesheet
+from Spritesheet import Spritesheet
 
 
 class Font(Spritesheet):
