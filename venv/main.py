@@ -55,16 +55,7 @@ def run_game():
                           "images/1-1/tile004.png",
                           "images/1-1/tile005.png",
                           "images/1-1/tile006.png",
-                          "images/1-1/tile007.png",
-                          "images/1-1/tile008.png",
-                          "images/1-1/tile009.png",
-                          "images/1-1/tile010.png",
-                          "images/1-1/tile011.png",
-                          "images/1-1/tile012.png",
-                          "images/1-1/tile013.png",
-                          "images/1-1/tile014.png",
-                          "images/1-1/tile015.png",
-                          "images/1-1/tile015.png"]])
+                          "images/1-1/tile007.png"]])
     background.scroll(0, 0)
 
     while True:
