@@ -48,7 +48,8 @@ def update_enemies(mario, enemies, powerups):
 def check_mario_enemy_collisions(mario, enemies):
     for enemy in enemies:
         # Checks if Mario stomped on an enemy
-        if enemy.rect.left <= mario.rect.right <= enemy.rect.right or enemy.rect.left <= mario.rect.left <= enemy.rect.right:
+        if enemy.rect.left <= mario.rect.right <= enemy.rect.right \
+                or enemy.rect.left <= mario.rect.left <= enemy.rect.right:
             # TODO implement Mario death sequence
             if enemy.rect.top - 1 <= mario.rect.bottom <= enemy.rect.top + 1:
                 enemy.state = c.JUMPED_ON

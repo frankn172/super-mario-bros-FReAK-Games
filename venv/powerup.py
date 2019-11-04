@@ -61,7 +61,7 @@ class Powerup(pg.sprite.Sprite):
         if self.y_vel < 10:
             self.y_vel += self.gravity
         if self.rect.bottom >= c.GROUND_HEIGHT:
-            self.rect.y == c.GROUND_HEIGHT
+            # self.rect.y == c.GROUND_HEIGHT
             self.y_vel = 0
             self.state = c.WALK
             return
@@ -115,7 +115,7 @@ class Star(Powerup):
             if self.y_vel < 6:
                 self.y_vel += self.gravity
             if self.rect.bottom >= c.GROUND_HEIGHT:
-                self.rect.y == c.GROUND_HEIGHT
+                # self.rect.y == c.GROUND_HEIGHT
                 self.y_vel = -6
             self.rect.y += self.y_vel
 

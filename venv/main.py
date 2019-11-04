@@ -3,11 +3,13 @@ from pygame.sprite import Group
 
 import gamefunctions as gf
 from backgroud import Background
-from dashboard import Dashboard
+# from dashboard import Dashboard
 from enemies import *
 from player import Mario
 from powerup import *
-from sound import Sound
+
+
+# from sound import Sound
 
 
 def run_game():
@@ -15,8 +17,8 @@ def run_game():
     pygame.init()
     screen = pygame.display.set_mode((448, 224))
     pygame.display.set_caption("Super Mario Bros")
-    dashboard = Dashboard("images/sprite_sheets_super_mario/font.png", 8, screen)
-    sound = Sound()
+    # dashboard = Dashboard("images/sprite_sheets_super_mario/font.png", 8, screen)
+    # sound = Sound()
     mario = Mario(screen)
     enemies = Group()
     enemies.add(Goomba(y=c.GROUND_HEIGHT, x=150, direction=c.LEFT))

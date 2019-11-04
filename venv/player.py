@@ -1,5 +1,6 @@
 import pygame
 from pygame.sprite import Sprite
+
 import constants as c
 
 
@@ -37,6 +38,7 @@ class Mario(Sprite):
 
         # Animation Tracker
         self.walk_count = 0
+        self.jump_count = 0
 
     def update(self):
         """Update Mario's position"""

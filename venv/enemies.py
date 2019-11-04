@@ -108,7 +108,7 @@ class Enemy(pg.sprite.Sprite):
         if self.y_vel < 10:
             self.y_vel += self.gravity
         if self.rect.bottom >= c.GROUND_HEIGHT:
-            self.rect.y == c.GROUND_HEIGHT
+            # self.rect.y == c.GROUND_HEIGHT
             self.y_vel = 0
             self.state = c.WALK
             return
@@ -133,6 +133,15 @@ class Enemy(pg.sprite.Sprite):
         self.animation()
 
     def draw(self, screen):
+        pass
+
+    def shell_sliding(self):
+        pass
+
+    def flying(self):
+        pass
+
+    def waiting(self):
         pass
 
 
