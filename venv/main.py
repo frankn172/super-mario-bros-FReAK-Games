@@ -3,7 +3,6 @@ from pygame.sprite import Group
 
 import gamefunctions as gf
 from backgroud import Background
-# from dashboard import Dashboard
 from enemies import *
 from player import Mario
 from powerup import *
@@ -17,7 +16,6 @@ def run_game():
     pygame.init()
     screen = pygame.display.set_mode((448, 224))
     pygame.display.set_caption("Super Mario Bros")
-    # dashboard = Dashboard("images/sprite_sheets_super_mario/font.png", 8, screen)
     # sound = Sound()
     mario = Mario(screen)
     enemies = Group()
